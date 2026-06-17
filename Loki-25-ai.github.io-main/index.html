@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lokadi Naicker — Projects</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #05060f;
+    --surface: #0d1020;
+    --surface-2: #131a30;
+    --ink: #eef0fb;
+    --ink-dim: #8e93b8;
+    --ink-faint: #4d5278;
+    --cyan: #5eead4;
+    --violet: #8b6bff;
+    --warm: #ffb066;
+    --line: #1c2240;
+    --grad: linear-gradient(135deg, var(--cyan), var(--violet));
+
+    --f-display: 'Space Grotesk', sans-serif;
+    --f-body: 'Inter', sans-serif;
+    --f-mono: 'JetBrains Mono', monospace;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--f-body);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{ color:inherit; }
+  :focus-visible{ outline:2px solid var(--warm); outline-offset:3px; }
+
+  .wrap{ max-width:1040px; margin:0 auto; padding:0 28px; }
+
+  /* ---------------- stars (shared) ---------------- */
+  .star{
+    position:absolute; border-radius:50%; background:#fff;
+    animation-name: twinkle; animation-iteration-count: infinite; animation-timing-function: ease-in-out;
+  }
+  .star.bright{ box-shadow: 0 0 6px rgba(255,255,255,.8); }
+  @keyframes twinkle{ 0%,100%{ opacity:.15; } 50%{ opacity:1; } }
+
+  /* ---------------- nav ---------------- */
+  nav{
+    position:sticky; top:0; z-index:40;
+    backdrop-filter: blur(10px);
+    background: rgba(5,6,15,0.7);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 28px;
+    max-width:1040px; margin:0 auto;
+  }
+  .nav-mark{ font-family:var(--f-display); font-weight:700; font-size:16px; letter-spacing:-0.01em; }
+  .nav-mark span{ background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .nav-link{
+    font-size:13px; color:var(--ink-dim); text-decoration:none;
+    border:1px solid var(--line); padding:8px 14px; border-radius:100px;
+    transition: border-color .15s ease, color .15s ease;
+  }
+  .nav-link:hover{ border-color:var(--cyan); color:var(--ink); }
+
+  /* ---------------- hero ---------------- */
+  .hero{ position:relative; overflow:hidden; padding:110px 0 90px; }
+  .hero .starfield{ position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:0; }
+  .nebula{
+    position:absolute; width:480px; height:480px; border-radius:50%;
+    background: var(--grad); filter: blur(130px); opacity:0.13;
+    top:-200px; left:-180px; pointer-events:none; z-index:0; will-change: transform;
+  }
+  @media (prefers-reduced-motion: no-preference){ .nebula{ transition: transform .6s ease-out; } }
+
+  .hero-planet{
+    position:absolute; border-radius:50%; pointer-events:none; z-index:0;
+    width:150px; height:150px; right:-30px; top:-20px;
+    background: radial-gradient(circle at 34% 30%, #ffd9a8, #d9783f 55%, #5c2c14 100%);
+    box-shadow: inset -16px -16px 34px rgba(0,0,0,.45), 0 0 50px rgba(255,150,80,.22);
+  }
+  .hero-planet::after{
+    content:""; position:absolute; left:-32%; right:-32%; top:44%; height:13px;
+    border:2px solid rgba(255,210,160,.45); border-radius:50%; transform: rotate(-18deg);
+  }
+
+  .hero-inner{ position:relative; z-index:1; }
+  .eyebrow{
+    font-family:var(--f-mono); font-size:12.5px; color:var(--ink-faint);
+    letter-spacing:0.06em; text-transform:uppercase;
+    display:flex; align-items:center; gap:8px; margin-bottom:22px;
+  }
+  .eyebrow .pulse{ width:7px; height:7px; border-radius:50%; background:#5fe3b3; flex-shrink:0; }
+  @media (prefers-reduced-motion: no-preference){ .eyebrow .pulse{ animation: pulse 2.2s ease-in-out infinite; } }
+  @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:0.35; } }
+
+  h1{
+    font-family:var(--f-display); font-weight:700;
+    font-size: clamp(40px, 6.4vw, 76px);
+    line-height:1.03; letter-spacing:-0.02em;
+    margin-bottom:24px; max-width:760px;
+  }
+  h1 .accent{ background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+
+  .lede{ font-size:17px; color:var(--ink-dim); max-width:520px; margin-bottom:38px; }
+
+  .hero-actions{ display:flex; flex-wrap:wrap; gap:14px; }
+  .btn{
+    font-family:var(--f-body); font-weight:600; font-size:14px;
+    padding:13px 22px; border-radius:10px;
+    text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+    cursor:pointer; border:1px solid transparent;
+    transition: transform .15s ease;
+  }
+  .btn-grad{ background:var(--grad); color:#05060f; }
+  .btn-ghost{ background:var(--surface); border-color:var(--line); color:var(--ink); }
+  .btn-ghost:hover{ border-color:var(--cyan); }
+  .btn[data-magnetic]{ will-change: transform; }
+
+  /* ---------------- stats ---------------- */
+  .stats{
+    display:flex; flex-wrap:wrap; gap:34px;
+    padding:34px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    margin-bottom:80px; position:relative; z-index:1;
+  }
+  .stat{ display:flex; flex-direction:column; gap:4px; }
+  .stat-num{ font-family:var(--f-display); font-size:28px; font-weight:600; }
+  .stat-label{ font-size:12px; color:var(--ink-faint); font-family:var(--f-mono); letter-spacing:0.04em; }
+
+  /* ---------------- projects ---------------- */
+  .section-head{
+    display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:14px;
+    margin-bottom:30px;
+  }
+  .section-head h2{ font-family:var(--f-display); font-size:26px; font-weight:600; }
+  .section-head p{ font-size:14px; color:var(--ink-faint); }
+
+  .sort-row{ display:flex; gap:8px; }
+  .chip{
+    font-family:var(--f-mono); font-size:11.5px; color:var(--ink-dim);
+    border:1px solid var(--line); background:var(--surface);
+    padding:6px 12px; border-radius:100px; cursor:pointer;
+  }
+  .chip.active{ border-color:var(--warm); color:var(--warm); }
+
+  .grid{
+    display:grid; grid-template-columns: repeat(2, 1fr); gap:18px;
+    margin-bottom:90px; perspective: 1200px;
+  }
+  @media (max-width:680px){ .grid{ grid-template-columns: 1fr; } }
+
+  .card{
+    position:relative; background: var(--surface); border:1px solid var(--line);
+    border-radius:16px; padding:26px; text-decoration:none; color:var(--ink);
+    display:flex; flex-direction:column;
+    transform: rotateX(var(--ry, 0deg)) rotateY(var(--rx, 0deg));
+    transition: transform .15s ease, border-color .2s ease;
+    overflow:hidden;
+  }
+  .card::before{
+    content:""; position:absolute; inset:0; border-radius:16px;
+    background: radial-gradient(280px circle at var(--mx,50%) var(--my,50%), rgba(94,234,212,0.14), transparent 60%);
+    opacity:0; transition: opacity .2s ease; pointer-events:none;
+  }
+  .card:hover::before, .card:focus-visible::before{ opacity:1; }
+
+  .card-top{ display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px; }
+  .card-name{ font-family:var(--f-display); font-size:18px; font-weight:600; }
+  .card-arrow{ color:var(--ink-faint); font-size:18px; transition: transform .15s ease, color .15s ease; }
+  .card:hover .card-arrow{ transform: translate(3px,-3px); color:var(--warm); }
+
+  .card-desc{ font-size:13.5px; color:var(--ink-dim); margin-bottom:20px; flex-grow:1; }
+
+  .card-meta{
+    display:flex; align-items:center; justify-content:space-between;
+    font-family:var(--f-mono); font-size:11.5px; color:var(--ink-faint);
+    border-top:1px solid var(--line); padding-top:14px; flex-wrap:wrap; gap:8px;
+  }
+  .lang{ display:inline-flex; align-items:center; gap:6px; }
+  .lang-dot{ width:8px; height:8px; border-radius:50%; }
+  .meta-right{ display:flex; gap:12px; }
+  .meta-right .star{ color:var(--warm); position:static; animation:none; }
+
+  .empty-slot{
+    border:1px dashed var(--line); border-radius:16px;
+    padding:26px; display:flex; align-items:center; justify-content:center;
+    color:var(--ink-faint); font-size:13px; font-family:var(--f-mono); text-align:center;
+  }
+
+  /* ---------------- footer ---------------- */
+  footer{
+    border-top:1px solid var(--line); padding:36px 0 60px;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px;
+    font-size:13px; color:var(--ink-faint);
+  }
+  footer a{ color:var(--ink-dim); text-decoration:none; }
+  footer a:hover{ color:var(--ink); }
+
+  /* ---------------- intro overlay ---------------- */
+  .intro-overlay{
+    position:fixed; inset:0; z-index:200;
+    background: radial-gradient(circle at 50% 60%, #0c1228, var(--bg) 70%);
+    overflow:hidden; transition: opacity .6s ease;
+  }
+  .intro-overlay.intro-done{ opacity:0; pointer-events:none; }
+  .intro-scene{ position:relative; width:100%; height:100%; }
+
+  .planet-depart{
+    position:absolute; left:-60px; bottom:-70px; width:200px; height:200px; border-radius:50%;
+    background: radial-gradient(circle at 32% 28%, #8fd6ff, #3a6fd8 55%, #142a66 100%);
+    box-shadow: inset -18px -18px 40px rgba(0,0,0,.45), 0 0 50px rgba(63,120,255,.3);
+    opacity:0; animation: fadeScaleIn .9s ease forwards;
+  }
+  .planet-dest{
+    position:absolute; right:8%; top:16%; width:130px; height:130px; border-radius:50%;
+    background: radial-gradient(circle at 35% 30%, #ffd9a8, #d9783f 55%, #5c2c14 100%);
+    box-shadow: inset -14px -14px 32px rgba(0,0,0,.45), 0 0 46px rgba(255,150,80,.28);
+    opacity:0; animation: fadeScaleIn .9s ease forwards; animation-delay:.2s;
+  }
+  .planet-dest::after{
+    content:""; position:absolute; left:-32%; right:-32%; top:42%; height:14px;
+    border:2px solid rgba(255,210,160,.55); border-radius:50%; transform: rotate(-18deg);
+  }
+  @keyframes fadeScaleIn{ from{ opacity:0; transform:scale(.88); } to{ opacity:1; transform:scale(1); } }
+
+  .intro-scene .star-layer{ position:absolute; inset:0; overflow:hidden; }
+
+  /* ---------------- rocket ---------------- */
+  .rocket-wrap{
+    position:absolute; left:6%; bottom:14%; width:30px; height:50px;
+    transform: rotate(35deg) scale(.9); opacity:0;
+  }
+  .rocket-wrap.fly{ animation: rocketFlight 3.6s cubic-bezier(.45,0,.55,1) forwards; animation-delay:.5s; }
+  @keyframes rocketFlight{
+    0%{ left:6%; bottom:14%; transform: rotate(35deg) scale(.9); opacity:0; }
+    8%{ opacity:1; }
+    35%{ left:38%; bottom:46%; transform: rotate(15deg) scale(1); }
+    70%{ left:66%; bottom:60%; transform: rotate(-6deg) scale(1.05); }
+    100%{ left:84%; bottom:54%; transform: rotate(-18deg) scale(.55); opacity:0; }
+  }
+  .rocket{ position:relative; width:100%; height:100%; }
+  .r-body{
+    position:absolute; left:7px; top:8px; width:16px; height:30px;
+    background: linear-gradient(180deg, #f4f5fc, #b9bedc); border-radius:8px 8px 4px 4px;
+  }
+  .r-nose{
+    position:absolute; left:7px; top:-6px; width:0; height:0;
+    border-left:8px solid transparent; border-right:8px solid transparent; border-bottom:14px solid var(--violet);
+  }
+  .r-window{
+    position:absolute; left:11px; top:14px; width:7px; height:7px; border-radius:50%;
+    background:var(--cyan); box-shadow:0 0 6px rgba(94,234,212,.85);
+  }
+  .r-fin-l{ position:absolute; left:1px; top:26px; width:0; height:0; border-top:9px solid transparent; border-right:9px solid var(--cyan); }
+  .r-fin-r{ position:absolute; right:1px; top:26px; width:0; height:0; border-top:9px solid transparent; border-left:9px solid var(--cyan); }
+  .r-flame{
+    position:absolute; left:9px; top:34px; width:12px; height:17px;
+    background: radial-gradient(circle at 50% 0%, #fff6c8, var(--warm) 55%, transparent 80%);
+    border-radius:50% 50% 60% 60%; filter:blur(.5px);
+    animation: flameFlicker .14s ease-in-out infinite alternate;
+  }
+  @keyframes flameFlicker{ from{ transform:scaleY(.85) scaleX(.9); } to{ transform:scaleY(1.18) scaleX(1.05); } }
+
+  .warp-flash{
+    position:absolute; right:11%; top:24%; width:10px; height:10px; border-radius:50%;
+    background:#fff; opacity:0; pointer-events:none;
+  }
+  .warp-flash.go{ animation: warpFlash .5s ease-out forwards; animation-delay:3.9s; }
+  @keyframes warpFlash{
+    0%{ opacity:0; transform:scale(1); box-shadow:0 0 0 rgba(255,255,255,0); }
+    40%{ opacity:1; transform:scale(1); box-shadow:0 0 60px 30px rgba(255,255,255,.9); }
+    100%{ opacity:0; transform:scale(1); box-shadow:0 0 120px 70px rgba(255,255,255,0); }
+  }
+
+  .skip-intro{
+    position:absolute; bottom:24px; right:28px;
+    background:transparent; border:1px solid var(--line); color:var(--ink-dim);
+    font-family:var(--f-mono); font-size:12px; padding:8px 14px; border-radius:100px;
+    cursor:pointer; opacity:0; animation: fadeInSkip .4s ease forwards; animation-delay:1s;
+  }
+  .skip-intro:hover{ border-color:var(--warm); color:var(--ink); }
+  @keyframes fadeInSkip{ to{ opacity:1; } }
+
+  @media (max-width:680px){
+    .planet-dest{ right:2%; width:100px; height:100px; }
+    .hero-planet{ width:100px; height:100px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="intro-overlay" id="introOverlay">
+  <div class="intro-scene">
+    <div class="star-layer" id="introStars"></div>
+    <div class="planet-depart"></div>
+    <div class="planet-dest"></div>
+    <div class="warp-flash" id="warpFlash"></div>
+    <div class="rocket-wrap" id="rocketWrap">
+      <div class="rocket">
+        <div class="r-nose"></div>
+        <div class="r-body"></div>
+        <div class="r-window"></div>
+        <div class="r-fin-l"></div>
+        <div class="r-fin-r"></div>
+        <div class="r-flame"></div>
+      </div>
+    </div>
+  </div>
+  <button class="skip-intro" id="skipIntro" type="button">Skip intro →</button>
+</div>
+
+<nav>
+  <div class="nav-row">
+    <div class="nav-mark">Lokadi<span> Naicker</span></div>
+    <a class="nav-link" href="https://github.com/LokadiNaicker" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="starfield" id="heroStars"></div>
+  <div class="nebula" id="nebula" aria-hidden="true"></div>
+  <div class="hero-planet" aria-hidden="true"></div>
+  <div class="wrap hero-inner">
+    <div class="eyebrow"><span class="pulse"></span> mission status: active · github.com/LokadiNaicker</div>
+    <h1>Currently in <span class="accent">orbit</span>.</h1>
+    <p class="lede">A live feed of what's launched on GitHub — pulled straight from mission control, no embellishment.</p>
+    <div class="hero-actions">
+      <a class="btn btn-grad" data-magnetic href="https://github.com/LokadiNaicker" target="_blank" rel="noopener">View GitHub profile</a>
+      <button class="btn btn-ghost" data-magnetic id="toProjects" type="button">See Projects ↓</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="stats" id="LANGUAGES">
+    <div class="stat"><span class="stat-num" id="statRepos">C++</span><span class="stat-label"></span></div>
+    <div class="stat"><span class="stat-num" id="statStars">JAVA</span><span class="stat-label"></span></div>
+    <div class="stat"><span class="stat-num" id="statFollowers">HTML</span><span class="stat-label"></span></div>
+    <div class="stat"><span class="stat-num" id="statLang">Python</span><span class="stat-label">TOP LANGUAGE</span></div>
+  </div>
+
+  <section id="projects">
+    <div class="section-head">
+      <div>
+        <h2>Projects</h2>
+        <p>Live from the GitHub API — updates automatically as new repos launch.</p>
+      </div>
+      <div class="sort-row">
+        <button class="chip active" data-sort="stars" type="button">★ stars</button>
+        <button class="chip" data-sort="updated" type="button">recent</button>
+        <button class="chip" data-sort="name" type="button">a–z</button>
+      </div>
+    </div>
+    <div class="grid" id="grid"><!-- populated by JS --></div>
+  </section>
+
+  <footer>
+    <span>Built for github.com/LokadiNaicker</span>
+    <a href="https://github.com/LokadiNaicker" target="_blank" rel="noopener">github.com/LokadiNaicker →</a>
+  </footer>
+
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var USERNAME = "LokadiNaicker";
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* real snapshot — always shown immediately, no waiting on network */
+  var DEFAULT_USER = {
+    public_repos: 1, followers: 2,
+    avatar_url: "https://avatars.githubusercontent.com/u/199980539?v=4",
+    bio: null
+  };
+  var DEFAULT_REPOS = [
+    {
+      name: "My Personal Project Portfolio",
+      description: "Personal GitHub Pages site — actively evolving.",
+      html_url: "https://github.com/LokadiNaicker/LokadiNaicker.github.io",
+      language: "HTML",
+      stargazers_count: 0,
+      forks_count: 0,
+      updated_at: null
+    },
+
+    {
+    name: "South African Bank Note Recognition System",
+    description: "Engineered a robust, scale and rotation-invariant Computer Vision pipeline to classify South African bank notes against complex, highly textured backgrounds.",
+    html_url: "https://github.com/ArjunRamphal/COMP702Project",
+    language: "Python",
+    stargazers_count: 0,
+    forks_count: 0,
+    updated_at: null
+    },
+
+    {
+    name: "Point of Sale System APPLICATION",
+    description: "Made a Trading and General Supplies Point of Sale System for a company based in Durban. This was strictly a desktop application that allowed the company to manage their customers and track orders.",
+    html_url: "https://github.com/ArjunRamphal/DnD-Trading",
+    language: "C#",
+    stargazers_count: 0,
+    forks_count: 0,
+    updated_at: null
+    },
+
+    {
+    name: "Point of Sale System WEBSITE",
+    description: "Made a web version of the Point of Sale System that allows customers to make orders.",
+    html_url: "https://github.com/ArjunRamphal/DNDWebsite",
+    language: "JavaScript, C#, ASP.NET, C#, CSS",
+    stargazers_count: 0,
+    forks_count: 0,
+    updated_at: null
+    },
+
+    {
+    name: "Dungeon Descent",
+    description: "Dungeon Descent is a C++ dungeon-crawling game developed using SFML, featuring animated menus, cinematic intro sequences, interactive dialogue systems, and real-time gameplay mechanics in a fantasy-themed environment.",
+    html_url: "https://github.com/ArjunRamphal/Dungeon_Descent",
+    language: "JavaScript, C++, HTML",
+    stargazers_count: 0,
+    forks_count: 0,
+    updated_at: null
+    }
+ 
+
+  ];
+
+  var repoData = DEFAULT_REPOS.slice();
+  var userData = DEFAULT_USER;
+
+  var LANG_COLORS = {
+    JavaScript:"#f1e05a", TypeScript:"#3178c6", Python:"#3572A5", HTML:"#e34c26",
+    CSS:"#563d7c", Go:"#00ADD8", Rust:"#dea584", Java:"#b07219", "C++":"#f34b7d",
+    C:"#9c9c9c", Shell:"#89e051", Ruby:"#701516", PHP:"#4F5D95", Swift:"#F05138",
+    Kotlin:"#A97BFF", Vue:"#41b883"
+  };
+  function langColor(l){ return LANG_COLORS[l] || "#8b6bff"; }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c];
+    });
+  }
+  function timeAgo(dateStr){
+    if(!dateStr) return null;
+    var diff = (Date.now() - new Date(dateStr).getTime()) / 1000;
+    if(diff < 60) return Math.floor(diff) + "s ago";
+    diff /= 60; if(diff < 60) return Math.floor(diff) + "m ago";
+    diff /= 60; if(diff < 24) return Math.floor(diff) + "h ago";
+    diff /= 24; if(diff < 30) return Math.floor(diff) + "d ago";
+    diff /= 30; if(diff < 12) return Math.floor(diff) + "mo ago";
+    diff /= 12; return Math.floor(diff) + "y ago";
+  }
+
+  function renderStats(){
+    var totalStars = repoData.reduce(function(s,r){ return s + (r.stargazers_count||0); }, 0);
+    var langCount = {};
+    repoData.forEach(function(r){ if(r.language) langCount[r.language] = (langCount[r.language]||0)+1; });
+    var topLang = Object.keys(langCount).sort(function(a,b){ return langCount[b]-langCount[a]; })[0] || "n/a";
+
+    document.getElementById("statRepos").textContent = userData.public_repos;
+    document.getElementById("statStars").textContent = totalStars;
+    document.getElementById("statFollowers").textContent = userData.followers;
+    document.getElementById("statLang").textContent = topLang;
+  }
+
+  function renderGrid(list){
+    var grid = document.getElementById("grid");
+    if(!list.length){
+      grid.innerHTML = '<div class="empty-slot">no missions logged yet — check back soon</div>';
+      return;
+    }
+    var html = list.map(function(repo){
+      var desc = repo.description ? escapeHtml(repo.description) : "No description yet.";
+      var lang = repo.language;
+      var langHtml = lang
+        ? '<span class="lang"><span class="lang-dot" style="background:' + langColor(lang) + '"></span>' + escapeHtml(lang) + '</span>'
+        : '<span></span>';
+      var ago = timeAgo(repo.updated_at);
+      return (
+        '<a class="card" href="' + repo.html_url + '" target="_blank" rel="noopener">' +
+          '<div class="card-top"><span class="card-name">' + escapeHtml(repo.name) + '</span><span class="card-arrow">↗</span></div>' +
+          '<div class="card-desc">' + desc + '</div>' +
+          '<div class="card-meta">' + langHtml +
+            '<span class="meta-right">' +
+              (ago ? '<span>' + ago + '</span>' : '') +
+              '<span class="star">★ ' + (repo.stargazers_count||0) + '</span>' +
+              '<span>⑂ ' + (repo.forks_count||0) + '</span>' +
+            '</span>' +
+          '</div>' +
+        '</a>'
+      );
+    }).join("");
+    html += '<div class="empty-slot">+ next mission queued</div>';
+    grid.innerHTML = html;
+  }
+
+  function sortAndRender(key){
+    var sorted = repoData.slice();
+    if(key === "stars") sorted.sort(function(a,b){ return (b.stargazers_count||0)-(a.stargazers_count||0); });
+    else if(key === "updated") sorted.sort(function(a,b){ return new Date(b.updated_at||0)-new Date(a.updated_at||0); });
+    else if(key === "name") sorted.sort(function(a,b){ return a.name.localeCompare(b.name); });
+    renderGrid(sorted);
+  }
+
+  document.querySelectorAll(".chip").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      document.querySelectorAll(".chip").forEach(function(b){ b.classList.remove("active"); });
+      btn.classList.add("active");
+      sortAndRender(btn.dataset.sort);
+    });
+  });
+
+  document.getElementById("toProjects").addEventListener("click", function(){
+    document.getElementById("projects").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+  });
+
+  /* ---------------- starfield generator ---------------- */
+  function createStars(container, count){
+    if(!container) return;
+    for(var i=0;i<count;i++){
+      var s = document.createElement("div");
+      var bright = Math.random() < 0.15;
+      s.className = "star" + (bright ? " bright" : "");
+      var size = bright ? (1.6 + Math.random()*1.4) : (1 + Math.random()*1.2);
+      s.style.width = size + "px";
+      s.style.height = size + "px";
+      s.style.left = (Math.random()*100).toFixed(1) + "%";
+      s.style.top = (Math.random()*100).toFixed(1) + "%";
+      var dur = 2 + Math.random()*3.5;
+      s.style.animationDuration = dur.toFixed(1) + "s";
+      s.style.animationDelay = (-Math.random()*dur).toFixed(1) + "s";
+      container.appendChild(s);
+    }
+  }
+  createStars(document.getElementById("introStars"), reduceMotion ? 40 : 70);
+  createStars(document.getElementById("heroStars"), reduceMotion ? 0 : 35);
+
+  /* ---------------- intro sequence ---------------- */
+  var introOverlay = document.getElementById("introOverlay");
+  var skipBtn = document.getElementById("skipIntro");
+  var rocketWrap = document.getElementById("rocketWrap");
+  var warpFlash = document.getElementById("warpFlash");
+
+  function endIntro(){
+    if(!introOverlay || introOverlay.dataset.done) return;
+    introOverlay.dataset.done = "1";
+    introOverlay.classList.add("intro-done");
+    document.body.style.overflow = "";
+    setTimeout(function(){ introOverlay.style.display = "none"; }, 650);
+  }
+
+  if(reduceMotion){
+    if(introOverlay) introOverlay.style.display = "none";
+  } else if(introOverlay){
+    document.body.style.overflow = "hidden";
+    rocketWrap.classList.add("fly");
+    warpFlash.classList.add("go");
+    skipBtn.addEventListener("click", endIntro);
+    setTimeout(endIntro, 4400);
+  }
+
+  renderStats();
+  sortAndRender("stars");
+
+  /* attempt to refresh live from the GitHub API; silently keep snapshot on failure */
+  Promise.all([
+    fetch("https://api.github.com/users/" + USERNAME).then(function(r){ if(!r.ok) throw 0; return r.json(); }),
+    fetch("https://api.github.com/users/" + USERNAME + "/repos?per_page=100&sort=updated").then(function(r){ if(!r.ok) throw 0; return r.json(); })
+  ]).then(function(results){
+    userData = results[0] || userData;
+    if(Array.isArray(results[1]) && results[1].length){ repoData = results[1]; 
+
+   repoData.push(
+{
+    name: "South African Bank Note Recognition System",
+    description: "Engineered a robust, scale and rotation-invariant Computer Vision pipeline to classify South African bank notes against complex, highly textured backgrounds.",
+    html_url: "https://github.com/ArjunRamphal/COMP702Project",
+    language: "Python",
+    stargazers_count: 0,
+    forks_count: 0,
+    updated_at: null
+},
+{
+    name: "Point of Sale System APPLICATION",
+    description: "Developed a Point of Sale desktop application for a Durban-based trading and general supplies company. The system manages customers, orders and business operations.",
+    html_url: "https://github.com/ArjunRamphal/DnD-Trading",
+    language: "C#",
+    stargazers_count: 0,
+    forks_count: 0,
+    updated_at: null
+},
+{
+    name: "Point of Sale System WEBSITE",
+    description: "Developed a web-based Point of Sale platform allowing customers to place and manage orders online.",
+    html_url: "https://github.com/ArjunRamphal/DNDWebsite",
+    language: "JavaScript, ASP.NET, C#, CSS",
+    stargazers_count: 0,
+    forks_count: 0,
+    updated_at: null
+},
+{
+    name: "Dungeon Descent",
+    description: "Dungeon Descent is a C++ dungeon-crawling game developed using SFML, featuring animated menus, cinematic intro sequences, interactive dialogue systems, and real-time gameplay mechanics in a fantasy-themed environment.",
+    html_url: "https://github.com/ArjunRamphal/Dungeon_Descent",
+    language: "JavaScript, C++, HTML",
+    stargazers_count: 0,
+    forks_count: 0,
+    updated_at: null
+}
+
+
+);
+
+    }
+    renderStats();
+    var active = document.querySelector(".chip.active");
+    sortAndRender(active ? active.dataset.sort : "stars");
+  }).catch(function(){ /* keep static snapshot, no error shown to user */ });
+
+  /* ---------------- card tilt + spotlight ---------------- */
+  if(!reduceMotion){
+    document.addEventListener("pointermove", function(e){
+      var card = e.target.closest && e.target.closest(".card");
+      if(!card) return;
+      var rect = card.getBoundingClientRect();
+      var x = (e.clientX - rect.left) / rect.width;
+      var y = (e.clientY - rect.top) / rect.height;
+      card.style.setProperty("--rx", ((x-0.5)*8).toFixed(2) + "deg");
+      card.style.setProperty("--ry", ((0.5-y)*8).toFixed(2) + "deg");
+      card.style.setProperty("--mx", (x*100).toFixed(1) + "%");
+      card.style.setProperty("--my", (y*100).toFixed(1) + "%");
+    });
+    document.addEventListener("pointerleave", function(e){
+      var card = e.target.closest && e.target.closest(".card");
+      if(card){ card.style.setProperty("--rx","0deg"); card.style.setProperty("--ry","0deg"); }
+    }, true);
+
+    document.querySelectorAll("[data-magnetic]").forEach(function(btn){
+      btn.addEventListener("pointermove", function(e){
+        var r = btn.getBoundingClientRect();
+        var mx = e.clientX - (r.left + r.width/2);
+        var my = e.clientY - (r.top + r.height/2);
+        btn.style.transform = "translate(" + (mx*0.18).toFixed(1) + "px," + (my*0.25).toFixed(1) + "px)";
+      });
+      btn.addEventListener("pointerleave", function(){ btn.style.transform = "translate(0,0)"; });
+    });
+
+    document.addEventListener("pointermove", function(e){
+      var nebula = document.getElementById("nebula");
+      var x = (e.clientX / window.innerWidth - 0.5) * 40;
+      var y = (e.clientY / window.innerHeight - 0.5) * 40;
+      nebula.style.transform = "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px)";
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
